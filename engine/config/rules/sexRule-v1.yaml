@@ -1,0 +1,258 @@
+rules:
+  # 开始规则
+  - code: "start"
+    type: start #开始节点类型
+    name: "main-start"
+    desc: "开始节点"
+    next:
+      - "sexual"
+  # 判断性别
+  - code: "sexual"
+    id: 1
+    type: condition  #条件节点类型
+    name: "判断性别"
+    desc: "通过sex来判断性别"
+    salience: 0
+    label: "sexual"
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: sex
+            operator: EQ
+            value: "男"
+            type: string
+        next:
+          - "sexual.man"
+      - condition: "condition2"
+        feature:
+          - field: sex
+            operator: EQ
+            value: "女"
+            type: string
+        next:
+          - "sexual.woman"
+      - condition: "condition3"
+        feature:
+          - field: birthday
+            operator: EQ
+            value: "2022-12-22 00:00:00"
+            type: date
+
+  #判断年龄(男生)
+  - code: "sexual.man"
+    id: 2
+    type: condition
+    name: "判断男生年龄"
+    desc: "通过age来判断年龄"
+    salience: 0
+    label: "sexual"
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: age
+            operator: LT
+            value: 18
+            type: int
+        execute:
+          - "age.calculate.int"
+        next:
+          - "sexual.book.game"
+      - condition: "condition"
+        feature:
+          - field: age
+            operator: GE
+            value: 18
+            type: int
+          - field: age
+            operator: LT
+            value: 60
+            type: int
+            logic: AND
+        next:
+          - "sexual.work.basketball"
+      - condition: "condition"
+        feature:
+          - field: age
+            operator: GT
+            value: 60
+            type: int
+        next:
+          - "sexual.chess.music"
+
+  #执行看书,玩游戏
+  - code: "sexual.book.game"
+    id: 3
+    type: action
+    name: "看书,玩游戏"
+    desc: "男孩喜欢看书玩游戏"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.book.game"
+    next:
+      - "end.book.game"
+
+  #结束
+  - code: "end.book.game"
+    id: 5
+    type: end
+    name: "规则结束"
+    desc: "男孩喜欢看书玩游戏结束"
+    salience: 0
+
+  #工作,打篮球
+  - code: "sexual.work.basketball"
+    id: 5
+    type: action
+    name: "工作,打篮球"
+    desc: "男人喜欢工作打篮球"
+    salience: 0
+    # 并行执行内置规则
+    executeType: parallel
+    execute:
+      - "default.work.basketball"
+    next:
+      - "end.work.basketball"
+  #结束
+  - code: "end.work.basketball"
+    id: 6
+    type: end
+    name: "规则结束"
+    desc: "男人喜欢工作打篮球结束"
+    salience: 0
+
+  #下棋,听音乐
+  - code: "sexual.chess.music"
+    id: 5
+    type: action
+    name: "下棋,听音乐"
+    desc: "老大爷喜欢下棋听音乐"
+    salience: 0
+    # 执行内置规则
+    executeType: serial
+    execute:
+      - "default.chess.music"
+    next:
+      - "end.chess.music"
+  #结束
+  - code: "end.chess.music"
+    id: 6
+    type: end
+    name: "规则结束"
+    desc: "老大爷喜欢下棋听音乐结束"
+    salience: 0
+
+  #判断年龄(女生)
+  - code: "sexual.woman"
+    id: 3
+    type: condition
+    name: "判断女生年龄"
+    desc: "通过age来判断年龄"
+    salience: 0
+    label: "sexual"
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: age
+            operator: LT
+            value: 20
+            type: int
+        next:
+          - "sexual.book.dance"
+      - condition: "condition2"
+        feature:
+          - field: age
+            operator: GE
+            value: 20
+            type: int
+        next:
+          - "sexual.woman.character"
+
+  #看书,跳舞
+  - code: "sexual.book.dance"
+    id: 5
+    type: action
+    name: "看书,跳舞"
+    desc: "小女孩爱看书,跳舞"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.book.dance"
+    next:
+      - "end.book.dance"
+  #结束
+  - code: "end.book.dance"
+    id: 6
+    type: end
+    name: "规则结束"
+    desc: "小女孩爱看书跳舞结束"
+    salience: 0
+
+  #判断性格
+  - code: "sexual.woman.character"
+    id: 4
+    type: condition
+    name: "判断女生性格"
+    desc: "通过character来判断性格"
+    salience: 0
+    label: "sexual"
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: character
+            operator: EQ
+            value: "内向"
+            type: string
+        next:
+          - "sexual.flower.coffee"
+      - condition: "condition2"
+        feature:
+          - field: character
+            operator: EQ
+            value: "外向"
+            type: string
+        next:
+          - "sexual.shopping.badminton"
+
+  #内向女生种花,喝咖啡
+  - code: "sexual.flower.coffee"
+    id: 5
+    type: action
+    name: "种花,喝咖啡"
+    desc: "内向的女生喜欢种花,喝咖啡"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.flower.coffee"
+      - "default.add.arguments.test"
+    next:
+      - "end.flower.coffee"
+  #结束
+  - code: "end.flower.coffee"
+    id: 6
+    type: end
+    name: "规则结束"
+    desc: "内向的女生喜欢种花喝咖啡结束"
+    salience: 0
+
+  #外向女生喜欢逛街,打羽毛
+  - code: "sexual.shopping.badminton"
+    id: 5
+    type: action
+    name: "逛街,打羽毛球"
+    desc: "外向的女生喜欢逛街,打羽毛球"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.shopping.badminton"
+      - "default.add.arguments.test"
+    next:
+      - "end.shopping.badminton"
+  #结束
+  - code: "end.shopping.badminton"
+    id: 6
+    type: end
+    name: "规则结束"
+    desc: "外向的女生喜欢逛街打羽毛球结束"
+    salience: 0
+

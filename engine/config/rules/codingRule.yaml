@@ -1,0 +1,406 @@
+rules:
+  # 开始规则
+  - code: "start"
+    name: "赋码规则-开始节点"
+    type: start #开始节点类型
+    desc: "开始节点"
+    execute:
+      - "default.user.info"
+    next:
+      - "ykm.measures"
+  #条件规则 主线路 【判断管控措施】
+  - code: "ykm.measures"
+    type: condition #条件节点类型
+    name: "判断管控措施"
+    desc: "通过gkcs_name来判断管控措施"
+    salience: 0
+    label: "control"
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: gkcs_name
+            operator: EQ
+            value: "三天两检/健康检测"
+            type: string
+        next:
+          - "ykm.give.yellow01"
+      - condition: "condition2"
+        feature:
+          - field: gkcs_name
+            operator: EQ
+            value: "三天三检"
+            type: string
+        next:
+          - "ykm.give.yellow02"
+      - condition: "condition3"
+        feature:
+          - field: gkcs_name
+            operator: EQ
+            value: "24小时一次核酸"
+            type: string
+        next:
+          - "ykm.give.green03"
+      - condition: "condition4"
+        feature:
+          - field: gkcs_name
+            operator: EQ
+            value: "三天集中隔离+4天居家隔离"
+            type: string
+        next:
+          - "ykm.give.rad04"
+      - condition: "condition5"
+        feature:
+          - field: gkcs_name
+            operator: EQ
+            value: "集中隔离/7天居家隔离"
+            type: string
+        next:
+          - "ykm.give.rad05"
+
+  #三天两检/健康监测 赋黄码
+  - code: "ykm.give.yellow01"
+    type: action
+    name: "赋黄码"
+    desc: "赋黄码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.yellow"
+    next:
+      - "ykm.calculate.time.chongqing01"
+
+  # 计算入渝时间
+  - code: "ykm.calculate.time.chongqing01"
+    type: action
+    name: "计算入渝时间"
+    desc: "计算入渝时间备注"
+    salience: 0
+    next:
+      - "ykm.nucleic.acid.record01"
+  # 取得入渝后核酸记录
+  - code: "ykm.nucleic.acid.record01"
+    type: action
+    name: "取得入渝时间之后的核酸记录"
+    desc: "取得入渝时间之后的核酸记录"
+    salience: 0
+    execute:
+      - "default.nucleic.record"
+    next:
+      - "ykm.nucleic.every.hours01"
+  #条件规则 线路1 【是否满足间隔24小时两次核酸】
+  - code: "ykm.nucleic.every.hours01"
+    label: "control"
+    type: condition
+    name: "是否满足间隔24小时两次核酸"
+    desc: "是否满足间隔24小时两次核酸备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: record_count
+            operator: GE
+            value: 2
+            type: int
+        next:
+          - "ykm.give.green01"
+  #是否满足间隔24小时两次核酸 转绿
+  - code: "ykm.give.green01"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green01"
+  #结束
+  - code: "end.give.green01"
+    type: end
+    name: "规则结束"
+    desc: "三天两检/健康监测转绿结束"
+    salience: 0
+
+  #三天三检 赋黄码
+  - code: "ykm.give.yellow02"
+    type: action
+    name: "赋黄码"
+    desc: "赋黄码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.yellow"
+    next:
+      - "ykm.calculate.time.chongqing02"
+  # 计算入渝时间
+  - code: "ykm.calculate.time.chongqing02"
+    type: action
+    name: "计算入渝时间"
+    desc: "计算入渝时间备注"
+    salience: 0
+    next:
+      - "ykm.nucleic.acid.record02"
+  # 取得入渝后核酸记录
+  - code: "ykm.nucleic.acid.record02"
+    type: action
+    name: "取得入渝时间之后的核酸记录"
+    desc: "取得入渝时间之后的核酸记录"
+    salience: 0
+    execute:
+      - "default.nucleic.record"
+    next:
+      - "ykm.nucleic.every.hours02"
+
+  #条件规则 线路2 【是否满足3天自然日核酸】
+  - code: "ykm.nucleic.every.hours02"
+    label: "control"
+    type: condition
+    name: "是否满足3天自然日核酸"
+    desc: "是否满足3天自然日核酸"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: day_count
+            operator: GE
+            value: 3
+            type: int
+        next:
+          - "ykm.give.green02"
+  #是否满足3天自然日核酸 转绿
+  - code: "ykm.give.green02"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green02"
+  #结束
+  - code: "end.give.green02"
+    type: end
+    name: "规则结束"
+    desc: "三天三检"
+    salience: 0
+
+  #24小时一次核酸 转绿
+  - code: "ykm.give.green03"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green03"
+  #结束
+  - code: "end.give.green03"
+    type: end
+    name: "规则结束"
+    desc: "24小时一次核酸转绿结束"
+    salience: 0
+
+  #三天集中隔离+4天居家隔离
+  - code: "ykm.give.rad04"
+    type: action
+    name: "赋红码"
+    desc: "赋红码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.rad"
+    next:
+      - "ykm.end.time.lt.current.time04"
+
+  - code: "ykm.end.time.lt.current.time04"
+    label: "control"
+    type: condition
+    name: "当前时间是否大于等于管控结束时间"
+    desc: "备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: gkcs_end_time
+            value: dateAfterNow(gkcs_end_time)
+            type: method
+        next:
+          - "ykm.give.green04"
+  #转绿
+  - code: "ykm.give.green04"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green04"
+  #结束
+  - code: "end.give.green04"
+    type: end
+    name: "规则结束"
+    desc: "三天集中隔离+4天居家隔离结束"
+    salience: 0
+
+  #集中隔离/7天居家隔离
+  - code: "ykm.give.rad05"
+    type: action
+    name: "赋红码"
+    desc: "赋红码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.rad"
+    next:
+      - "ykm.quarant.address05"
+
+  - code: "ykm.quarant.address05"
+    label: "control"
+    type: action
+    name: "取得隔离点数据"
+    desc: "取得隔离点数据备注"
+    salience: 0
+    execute:
+      - "default.quarant.address.data"
+    next:
+      - "ykm.exist.quarant.address05"
+
+  - code: "ykm.exist.quarant.address05"
+    label: "control"
+    type: condition
+    name: "是否存在隔离点数据"
+    desc: "是否存在隔离点数据备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: quarant_address_count
+            operator: NEQ
+            value: 0
+            type: int
+        next:
+          - "ykm.exist.quarant.status05"
+      - condition: "condition2"
+        feature:
+          - field: quarant_address_count
+            operator: EQ
+            value: 0
+            type: int
+        next:
+          - "ykm.rad.end.time.lt.current.time05"
+
+  #是否解除隔离
+  - code: "ykm.exist.quarant.status05"
+    label: "control"
+    type: condition
+    name: "是否解除隔离"
+    desc: "是否解除隔离备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: quarant_status
+            operator: EQ
+            value: 0
+            type: int
+        next:
+          - "ykm.give.green05"
+      - condition: "condition2"
+        feature:
+          - field: quarant_status
+            operator: EQ
+            value: 1
+            type: int
+  #转绿
+  - code: "ykm.give.green05"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green05"
+  #结束
+  - code: "end.give.green05"
+    type: end
+    name: "规则结束"
+    desc: "集中隔离/7天居家隔离结束"
+    salience: 0
+
+  #条件规则 线路5.2 【当前时间是否大于等于管控结束时间】
+  - code: "ykm.rad.end.time.lt.current.time05"
+    label: "control"
+    type: condition
+    name: "当前时间是否大于等于管控结束时间"
+    desc: "备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: end_time
+            operator: LT
+            value: dateNow
+            type: date
+        next:
+          - "ykm.after.nucleic.acid.record05"
+
+  #执行规则 线路5.2 【取得管控结束之后的核酸记录】
+  - code: "ykm.after.nucleic.acid.record05"
+    label: "control"
+    type: action
+    name: "取得管控结束之后的核酸记录"
+    desc: "取得管控结束之后的核酸记录信息"
+    salience: 0
+    execute:
+      - "default.after.nucleic.acid.record"
+    next:
+      - "ykm.nucleic.every.day05"
+  #条件规则 线路5.2 【是否满足3天自然日核酸】
+  - code: "ykm.nucleic.every.day05"
+    label: "control"
+    type: condition
+    name: "是否满足3天自然日核酸"
+    desc: "是否满足3天自然日核酸备注"
+    salience: 0
+    conditions:
+      - condition: "condition"
+        feature:
+          - field: ryly_date
+            operator: GE
+            value: 3
+            type: int
+        next:
+          - "ykm.give.green0502"
+
+  #转绿
+  - code: "ykm.give.green0502"
+    type: action
+    name: "转绿"
+    desc: "转绿码"
+    salience: 0
+    # 执行内置规则
+    execute:
+      - "default.give.green"
+    next:
+      - "end.give.green0502"
+  #结束
+  - code: "end.give.green0502"
+    type: end
+    name: "规则结束"
+    desc: "集中隔离/7天居家隔离结束"
+    salience: 0
+
+
+
+
+
+
+
+

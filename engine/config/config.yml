@@ -1,0 +1,339 @@
+server:
+  name: engine
+  port: 8080
+  version: 1.0
+  jwtSecret: 38324
+  grpcAddress: "127.0.0.1:10001"
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.0.165
+#  port: 3306
+#  database: engine
+#  username: cs
+#  password: Zt123
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: localhost
+#  port: 3306
+#  database: test_gzyq
+#  username: root
+#  password: root
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.0.165
+#  port: 3306
+#  database: engine_jx_test
+#  username: cs
+#  password: Zt123
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.111.31
+#  port: 3306
+#  database: engine_dev
+#  username: root
+#  password: zenith
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+mysql:
+  driverName: mysql
+  host: 192.168.0.165
+  port: 3306
+  database: engine_dev
+  username: cs
+  password: Zt123
+  charset: utf8mb4
+  maxIdleConn: 20 #链接池空闲链接最大数量
+  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.0.165
+#  port: 3306
+#  database: engine_ai
+#  username: cs
+#  password: Zt123
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.0.165
+#  port: 3306
+#  database: engine_demo
+#  username: cs
+#  password: Zt123
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: police.zt.com.cn
+#  port: 33336
+#  database: db_engine_0522
+#  username: root
+#  password: Zt2022enee!
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+
+#mysql:
+#  driverName: mysql
+#  host: 192.168.0.136
+#  port: 3306
+#  database: db_engine
+#  username: root
+#  password: qyoa136
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+
+#mysql:
+#  driverName: mysql
+#  host: 172.18.40.49
+#  port: 3306
+#  database: gm
+#  username: root
+#  password: 61255216
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#mysql:
+#  driverName: mysql
+#  host: 172.18.41.34
+#  port: 3306
+#  database: engine_dev
+#  username: root
+#  password: 123456
+#  charset: utf8mb4
+#  maxIdleConn: 20 #链接池空闲链接最大数量
+#  maxOpenConn: 200 #同时打开的连接数 (使用中 + 空闲)
+#  connMaxLifetime: 300 #可重用链接的最大时间长度
+
+#redis:
+#  address: 192.168.0.164:6379
+#  password:
+#  db: 1
+#  poolSize: 1000 #连接池最大socket连接数，默认为4倍CPU数， 4 * runtime.NumCPU
+#  maxIdleConn: 1000
+#  minIdleConn: 50
+#  poolTimeout: 4 #单位:秒 当所有连接都处在繁忙状态时，客户端等待可用连接的最大等待时长
+
+rule:
+  storage: db # 规则存储类型[db,file]
+  data: memory #数据存储类型 [memory,redis]
+  log: file # 日志存储类型[file,es]
+  poolMax: 10
+  poolMin: 5
+  debugSecond: 3000 # 默认debug时效时间3600秒
+
+
+#variable: # 参数获取配置
+#  apiAll: http://172.18.40.15:28083/kpidemo/getparams # 接口地址 全局参数
+#  apiSingle: http://172.18.40.15:28083/kpidemo/getparamvalue # 接口地址 单个参数
+#  apiDefine: http://localhost:28082/kpidemo/getparamsdefine # 接口地址 设计时(不需要值)
+#  apiAll: http://localhost:28082/kpidemo/getparams # 接口地址 全局参数
+#  apiSingle: http://localhost:28082/kpidemo/getparamvalue # 接口地址 单个参数
+#  apiDefine: http://localhost:28082/kpidemo/getparamsdefine # 接口地址 设计时(不需要值)
+#  mock: false
+
+# 规则引擎可用数据库
+#data:
+#  - title: 基础指标系数库
+#    driverName: mysql
+#    host: police.zt.com.cn
+#    port: 33336
+#    database: db_appraisal_0522
+#    username: root
+#    password: Zt2022enee!
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+
+#data:
+#  - title: 基础指标系数库
+#    driverName: mysql
+#    host: 192.168.0.136
+#    port: 3306
+#    database: db_appraisal_dev
+#    username: root
+#    password: qyoa136
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+
+data:
+#  - title: 财务数据库
+#    driverName: mysql
+#    host: 172.18.40.49
+#    port: 3306
+#    database: gm
+#    username: root
+#    password: 61255216
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+#   db1
+#  - title: 基础指标系数库
+#    driverName: mysql
+#    host: police.zt.com.cn
+#    port: 33336
+#    database: db_appraisal
+#    username: root
+#    password: Zt2022enee!
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+#  - title: 基础指标系数库
+#    driverName: mysql
+#    host: localhost
+#    port: 3306
+#    database: engine
+#    username: root
+#    password: root
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+
+#  # db2
+#  - title: 开发环境数据库
+#    driverName: mysql
+#    host: 192.168.0.165
+#    port: 3306
+#    database: engine_dev
+#    username: cs
+#    password: Zt123
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+# db4
+#  - title: 办件业务库
+#    driverName: mysql
+#    host: 192.168.0.150
+#    port: 13306
+#    database: webdc20230213
+#    username: root
+#    password: root
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+#  # db3
+#  - title: ttt
+#    driverName: mysql
+#    host: 172.18.40.113
+#    port: 3306
+#    database: ttt
+#    username: root
+#    password: Aa123456!
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+#  # db1
+#  - title: 基础指标系数库
+#    driverName: mysql
+#    host: 192.168.0.136
+#    port: 3306
+#    database: db_appraisal
+#    username: root
+#    password: qyoa136
+#    charset: utf8mb4
+#    maxIdleConn: 20
+#    maxOpenConn: 200
+#    connMaxLifetime: 300
+
+
+# 规则引擎可用第三方系统
+http:
+#  - system: 绩效-规则引擎
+#    host: http://192.168.0.148:29003
+#    oauth:
+#      enable: false # 第三方系统是否开启了对规则引擎的认证
+#  - system: AI-模型
+#    host: http://127.0.0.1:5000
+#    oauth:
+#      enable: false # 第三方系统是否开启了对规则引擎的认证
+#  - system: 绩效-规则引擎
+#    host: http://192.168.0.148:29003
+#    oauth:
+#      enable: false # 第三方系统是否开启了对规则引擎的认证
+#  - system: AI-民呼我为
+#    host: http://127.0.0.1:8786
+#    oauth:
+#      enable: false # 第三方系统是否开启了对规则引擎的认证
+#  - system: 运维管理平台-开发环境
+#    host: http://192.168.111.23:28082/ztop
+#    oauth:
+#      enable: true # 第三方系统是否开启了对规则引擎的认证
+#      type: password # password(账号密码模式 使用到url,userName,password,tokenKey字段) client(客户端模式 使用到url,appKey,appSecret) token(直接使用第三方应用提供的永久token)
+#      url: /sys/sso/login?type=1
+#      token:
+#      appKey:
+#      appSecret:
+#      userName: admin
+#      password: Aa12345678
+#
+#  - system: 运维管理平台-正式环境
+#    host: http://192.168.111.11:7974
+#    oauth:
+#      enable: true
+#      type: client
+#      url: /ztop/sys/sso/login
+#      token: eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSKkhOTMnNzLMCk0o6SpmJJUpWhmYWhmaWZibGFjpKqRUFEAFzA2MzkEBGfjFQiZKhuZGeoYWeiYGeobkFUGN-QWqeZwpIwsDAwgxkUopzYhFIAGJ0LQBgKC7tcgAAAA.fs1OSH0bc8dCaKJnjI7LP1E4bXFrzF3gR5xLuAxg_LM
+#      appKey:
+#      appSecret:
+#      userName: admin
+#      password: Aa12345678
+#
+#  - system: 业务规则条件过滤接口
+#    host: http://172.18.40.233:18080/moli
+#    oauth:
+#      enable: false
+#      type: client
+#      url: /ztop/sys/sso/login
+#      token: eyJhbGciOiJIUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAKtWKi5NUrJSKkhOTMnNzLMCk0o6SpmJJUpWhmYWhmaWZibGFjpKqRUFEAFzA2MzkEBGfjFQiZKhuZGeoYWeiYGeobkFUGN-QWqeZwpIwsDAwgxkUopzYhFIAGJ0LQBgKC7tcgAAAA.fs1OSH0bc8dCaKJnjI7LP1E4bXFrzF3gR5xLuAxg_LM
+#      appKey:
+#      appSecret:
+#      userName: admin
+#      password: Aa12345678
+
+
+
+
