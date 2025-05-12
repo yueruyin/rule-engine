@@ -1,4 +1,4 @@
-# zenith-rules
+# rules-engine
 
 gin+grpc+gorm+mysql+redis 规则引擎
 
